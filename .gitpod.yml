@@ -1,14 +1,10 @@
-image:
-  file: .gitpod.Dockerfile
+# This is the full, correct .gitpod.yml file
+# It now uses the latest syntax and best practices.
 
-timeout: 3h
-
-ports:
-  - port: 5901
-    onOpen: ignore
-
+# Define the tasks to run when the workspace starts
 tasks:
-  - init: |
+  - name: Setup and Start
+    init: |
       # Create VNC config and make our script executable
       mkdir -p ~/.vnc
       echo '#!/bin/bash
@@ -19,3 +15,13 @@ tasks:
     command: |
       # Run our startup script
       ./start.sh
+
+# Define which ports to open
+ports:
+  - port: 5901
+    # This just tells Gitpod to be aware of the port, but not to open a browser for it.
+    onOpen: ignore
+
+# Tell Gitpod to use our custom Dockerfile for setup
+image:
+  file: .gitpod.Dockerfile
