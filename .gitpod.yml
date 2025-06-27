@@ -1,0 +1,30 @@
+# Tell Gitpod to use our custom Dockerfile for the setup
+image:
+  file: .gitpod.Dockerfile
+
+# Set the workspace inactivity timeout to 3 hours to keep it running
+timeout: 3h
+
+# Define which network port to open for the VNC connection
+ports:
+  - port: 5901
+    onOpen: ignore
+
+# Define the commands to run every time the workspace starts
+tasks:
+  - init: |
+      # Create a configuration folder for VNC
+      mkdir -p ~/.vnc
+      # Create the VNC startup script to launch the XFCE desktop
+      echo '#!/bin/bash
+      xrdb $HOME/.Xresources
+      startxfce4 &' > ~/.vnc/xstartup
+      # Make the startup script executable
+      chmod +x ~/.vnc/xstartup
+    command: |
+      # Start the Tailscale service in the background
+      sudo tailscaled &
+      # Bring this machine online within your Tailscale network
+      sudo tailscale up &
+      # Start the VNC server on virtual display :1 for you to connect to
+      vncserver -geometry 1280x720 :1
