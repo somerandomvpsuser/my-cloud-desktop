@@ -1,16 +1,17 @@
 # Use a standard Gitpod image as our starting point
 FROM gitpod/workspace-full
 
-# Switch to the 'root' user to get permissions to install software
+# Switch to the 'root' user to install software
 USER root
 
-# Update the list of available software and install our required packages
-# This installs the desktop (xfce4), VNC server, and tools for installing Chrome
+# Update software lists and install our required packages
+# NEW: We've added 'qrencode' to this list
 RUN apt-get update && \
     apt-get install -y \
     xfce4 \
     xfce4-goodies \
     tightvncserver \
+    qrencode \
     wget \
     gnupg \
     && rm -rf /var/lib/apt/lists/*
@@ -27,5 +28,6 @@ RUN curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.gpg | apt-key add 
     apt-get update && \
     apt-get install -y tailscale
 
-# Switch back to the standard, non-root 'gitpod' user
+# Switch back to the standard 'gitpod' user
 USER gitpod
+```4.  **Commit** the new file.
