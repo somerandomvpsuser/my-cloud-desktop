@@ -1,0 +1,21 @@
+image:
+  file: .gitpod.Dockerfile
+
+timeout: 3h
+
+ports:
+  - port: 5901
+    onOpen: ignore
+
+tasks:
+  - init: |
+      # Create VNC config and make our script executable
+      mkdir -p ~/.vnc
+      echo '#!/bin/bash
+      xrdb $HOME/.Xresources
+      startxfce4 &' > ~/.vnc/xstartup
+      chmod +x ~/.vnc/xstartup
+      chmod +x ./start.sh
+    command: |
+      # Run our startup script
+      ./start.sh
