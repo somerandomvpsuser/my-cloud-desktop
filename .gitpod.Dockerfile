@@ -4,7 +4,14 @@ FROM gitpod/workspace-full
 # Switch to the 'root' user to get permissions to install software
 USER root
 
+# --- THIS IS THE FIX ---
+# Set the DEBIAN_FRONTEND variable to 'noninteractive'.
+# This prevents the package installer (apt-get) from asking any
+# interactive questions (like keyboard layout) that would hang the build.
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Update software lists and install our required packages
+# No changes are needed here; the ENV command above applies to this RUN instruction.
 RUN apt-get update && \
     apt-get install -y \
     xfce4 \
