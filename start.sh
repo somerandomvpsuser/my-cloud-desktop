@@ -3,12 +3,12 @@
 # This script will be run by our .gitpod.yml file
 
 # Start essential services in the background
-# We add 'sudo' because tailscaled needs root permissions
 sudo tailscaled &
-vncserver -geometry 1280x720 :1 &
+
+# THE FIX IS ON THIS LINE: added "-localhost no" to allow external connections
+vncserver -localhost no -geometry 1280x720 :1 &
 
 # Bring this machine online with Tailscale
-# The '|| true' part prevents the workspace from stopping if you don't auth quickly
 sudo tailscale up || true
 
 # --- AUTOMATION SCRIPT ---
