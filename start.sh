@@ -2,6 +2,15 @@
 
 # This script will be run by our .gitpod.yml file
 
+# --- FIX ---
+# Set a VNC password non-interactively before starting the server.
+# This creates the password file and avoids the "Password too short" error.
+# The password you will use to connect is "gitpod".
+mkdir -p ~/.vnc
+echo "gitpod" | vncpasswd -f > ~/.vnc/passwd
+chmod 600 ~/.vnc/passwd
+# --- END FIX ---
+
 # Start essential services in the background
 sudo tailscaled &
 
@@ -25,13 +34,12 @@ echo ""
 echo "-----------------------------------------------------"
 echo "           READY TO CONNECT!"
 echo ""
-# FIX 1: Add the port to the human-readable text
 echo "    Your VNC Address is: $IP_ADDRESS:5901"
+echo "    Your VNC Password is: gitpod"
 echo "    Or scan the QR code below with your phone's camera"
 echo "-----------------------------------------------------"
 echo ""
 
-# FIX 2: Add the port to the QR code link
 # Generate the VNC deep link and display it as a QR code
 qrencode -t ANSIUTF8 "vnc://$IP_ADDRESS:5901"
 
